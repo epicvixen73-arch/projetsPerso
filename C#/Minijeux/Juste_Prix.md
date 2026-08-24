@@ -2,7 +2,7 @@
 
 Un **jeu de devinette simple mais efficace** écrit en C# avec validation d'entrée et feedback interactif.
 
-Le lien si vous voulez testez: [Minigame_Juste-Prix.cs](https://github.com/epicvixen73-arch/Projects/blob/main/CSharp/Minigame/Minigame%20%22Juste_ptrix%22.cs)
+Le lien si vous voulez testez: [Minigame_Juste-Prix.cs](https://github.com/epicvixen73-arch/projetsPerso/blob/main/C%23/Minijeux/Juste_Prix.cs)
 
 ## Règles du Jeu
 

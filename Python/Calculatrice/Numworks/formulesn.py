@@ -22,7 +22,7 @@ def pythagore():
     a = float(input("\na: "))
     b = float(input("b: "))
     if choix == "1":
-        c = a ** 2 + b ** 2
+        c = sqrt(a ** 2 + b ** 2)
         print("Hypo du triangle = " + str(c))
         return
     elif choix == "2":

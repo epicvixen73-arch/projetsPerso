@@ -44,7 +44,7 @@ def pythagore():
     a = float(input("a: "))
     b = float(input("b: "))
     if choix == "c":
-        c = a ** 2 + b ** 2
+        c = sqrt(a ** 2 + b ** 2)
         print(f"L'hypothénuse du triangle vaut {c}")
         return
     elif choix == "v":

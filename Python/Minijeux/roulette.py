@@ -39,9 +39,6 @@ def main():
             # Tirage
             num = randint(0, 36)
             color = get_color(num)
-            
-            print("\n>>> TIRAGE: " + str(num) + " (" + color + ")")
-            
             gain = 0
             
             if choice == 1:
@@ -51,6 +48,7 @@ def main():
                     print("GAGNE: " + str(gain) + "$")
                 else:
                     print("PERDU")
+                print("\n>>> TIRAGE: " + str(num) + " (" + color + ")")
                     
             elif choice == 2:
                 print("R = ROUGE, N = NOIR, V = VERT")

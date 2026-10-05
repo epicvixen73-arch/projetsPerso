@@ -5,143 +5,99 @@ using System.Text;
 using System.Threading.Tasks;
 using Math = System.Math;
 using System.Globalization;
-namespace Test_App
-{
-    internal class Program
-    {
-        abstract class Operation
-        {
+namespace Test_App{
+    internal class Program{
+        abstract class Operation{
             public abstract float Calcul(float a, float b);
             public abstract string GetName();
         }
-        class Addition : Operation
-        {
-            public override float Calcul(float a, float b)
-            {
+        class Addition : Operation{
+            public override float Calcul(float a, float b){
                 return a + b;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Addition";
             }
         }
-        class Soustraction : Operation
-        {
-            public override float Calcul(float a, float b)
-            {
+        class Soustraction : Operation{
+            public override float Calcul(float a, float b){
                 return a - b;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Soustraction";
             }
         }
-        class Multiplication : Operation
-        {
-            public override float Calcul(float a, float b)
-            {
+        class Multiplication : Operation{
+            public override float Calcul(float a, float b){
                 return a * b;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Multiplication";
             }
         }
-        class Division : Operation
-        {
-            public override float Calcul(float a, float b)
-            {
+        class Division : Operation{
+            public override float Calcul(float a, float b){
                 return a / b;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Division";
             }
         }
-        class Reste : Operation
-        {
-            public override float Calcul(float a, float b)
-            {
+        class Reste : Operation{
+            public override float Calcul(float a, float b){
                 return a % b;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Reste";
             }
         }
-        abstract class Fonctions
-        {
+        abstract class Fonctions{
             public abstract float Fonction(float a);
             public abstract string GetName();
         }
-        class Carre : Fonctions
-        {
-            public override float Fonction(float a)
-            {
+        class Carre : Fonctions{
+            public override float Fonction(float a){
                 return (float)Math.Pow(a, 2);
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Carre";
             }
         }
-        class Cube : Fonctions
-        {
-            public override float Fonction(float a)
-            {
+        class Cube : Fonctions{
+            public override float Fonction(float a){
                 return (float)Math.Pow(a, 3);
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Cube";
             }
         }
-        class Inverse : Fonctions
-        {
-            public override float Fonction(float a)
-            {
+        class Inverse : Fonctions{
+            public override float Fonction(float a){
                 return 1 / a;
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Inverse";
             }
         }
-        class Racine : Fonctions
-        {
-            public override float Fonction(float a)
-            {
+        class Racine : Fonctions{
+            public override float Fonction(float a){
                 if (a < 0)
                     return float.NaN;
                 return (float)Math.Sqrt(a);
             }
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Racine Carrée";
             }
         }
-        class Absolue : Fonctions
-        {
-            public override float Fonction(float a)
-            {
+        class Absolue : Fonctions{
+            public override float Fonction(float a){
                 return (float)Math.Abs(a);
             }
-
-            public override string GetName()
-            {
+            public override string GetName(){
                 return "Valeur Absolue";
             }
         }
-        static void Main(string[] args)
-        {
+        static void Main(string[] args){
             string message = "\nAppuyez sur une touche pour revenir au menu principal...";
             string asciiApp = @"
   /$$$$$$                      /$$ /$$                       /$$     /$$                    
@@ -213,14 +169,12 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                                                                 $$ |                    
                                                                 \__|                    
 ";
-            while (true)
-            {
+            while (true){
                 Console.Clear();
                 PrintBanner(asciiApp, ConsoleColor.Red);
                 if (!Saisir("===  Test_App  === \n1: Calculatrice \n2: Juste Prix \n3: Convertisseur °C/°F\n4: Quitter \nChoix: " , out int ActionChoice, 4))
                     continue;
-                switch (ActionChoice)
-                {
+                switch (ActionChoice){
                     case 1:
                         //Calculatrice
                         PrintBanner(asciiCalc, ConsoleColor.Cyan);
@@ -245,15 +199,13 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                         };
 
 
-                        while (!quitCalc)
-                        {
+                        while (!quitCalc){
                             global::System.Console.WriteLine("#######################");
                             global::System.Console.WriteLine();
                             message = "-----[1]: Opérateur---- \n-----[2]: Puissances--- \n-----[3]: Fonctions---- \n-----[4]: Quit--------- \nChoix: ";
                             if (!Saisir(message, out int choix, 4))
                                 continue;
-                            switch (choix)
-                            {
+                            switch (choix){
                                 case 1:
                                     message = "-------Opérateur-------";
                                     for (int i = 0; i < operations.Count; i++)
@@ -287,8 +239,7 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                                     break;
                                 case 3:
                                     message = "-------Fonctions-------";
-                                    for (int i = 0; i < fonctions.Count; i++)
-                                    {
+                                    for (int i = 0; i < fonctions.Count; i++){
                                         Fonctions op = fonctions[i];
                                         message += "\n[" + (i + 1) + "] " + op.GetName();
                                     }
@@ -321,20 +272,16 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
 
                         int valueToGuess = random.Next(0, randomMax);
                         Console.WriteLine($"Nombre à trouver entre 0 et {randomMax - 1}");
-                        while (nbGuess > 0 && !hasWon)
-                        {
-                            if (Saisir("Ton guess: ", out int guess, randomMax))
-                            {
+                        while (nbGuess > 0 && !hasWon){
+                            if (Saisir("Ton guess: ", out int guess, randomMax)){
                                 int ecart = Math.Abs(valueToGuess - guess);
-                                if (ecart <= 1)
-                                {
+                                if (ecart <= 1){
                                     hasWon = true;
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine("Tu as gagné !");
                                     Console.ResetColor();
                                 }
-                                else
-                                {
+                                else{
                                     string chaleur = ecart < 2 ? "BRÛLANT !" : ecart < 5 ? "Chaud" : ecart < 10 ? "Tiède" : "Froid";
                                     ConsoleColor couleur = ecart < 2 ? ConsoleColor.Red : ecart < 5 ? ConsoleColor.Yellow : ecart < 10 ? ConsoleColor.DarkYellow : ConsoleColor.Blue;
                                     string direction = valueToGuess > guess ? "supérieure" : "inférieure";
@@ -343,23 +290,19 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                                     Console.ResetColor();
                                 }
                             }
-                            else
-                            {
+                            else{
                                 continue;
                             }
-
                             nbGuess--;
                             Console.WriteLine(nbGuess + " / 5 essai(s) restant(s). ");
                         }
 
-                        if (hasWon)
-                        {
+                        if (hasWon){
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Fin du jeu, merci d'y avoir joué ! Vous avez gagné ! La valeur était : " + valueToGuess);
                             Console.ResetColor();
                         }
-                        else
-                        {
+                        else{
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Fin du jeu, merci d'y avoir joué ! Vous avez perdu. La valeur était : " + valueToGuess);
                             Console.ResetColor();
@@ -378,14 +321,12 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                         if (!SaisirAnyFloat("Température: ", out float tempVal))
                             break;
 
-                        if (convChoice == 1)
-                        {
+                        if (convChoice == 1){
                             float resultF = tempVal * 9f / 5f + 32f;
                             Console.WriteLine($"{tempVal} °C = {resultF} °F");
                             historique.Add($"Conversion : {tempVal}°C = {resultF}°F");
                         }
-                        else
-                        {
+                        else{
                             float resultC = (tempVal - 32f) * 5f / 9f;
                             Console.WriteLine($"{tempVal} °F = {resultC} °C");
                             historique.Add($"Conversion : {tempVal}°F = {resultC}°C");
@@ -405,77 +346,61 @@ $$ |  $$ |$$ |$$$$$$$  |  \$$$$  |\$$$$$$  |$$ |      $$ |\$$$$$$$ |\$$$$$$  |\$
                 }
             }
         }
-        static bool Saisir(string message, out int userChoice, int borne = int.MaxValue)
-        {
+        static bool Saisir(string message, out int userChoice, int borne = int.MaxValue){
             Console.Write("\n" + message);
-
             string saisi = Console.ReadLine();
-            if (int.TryParse(saisi, out userChoice))
-            {
+            if (int.TryParse(saisi, out userChoice)){
                 return IsInBorne(userChoice, borne);
             }
-            else
-            {
+            else{
                 Console.WriteLine("Invalide, reboot... ");
                 return false;
             }
         }
-        static bool Saisir(string message, out float userChoice, float borne = float.MaxValue)
-        {
+        static bool Saisir(string message, out float userChoice, float borne = float.MaxValue){
             Console.Write("\n" + message);
             string saisi = Console.ReadLine();
-            if (float.TryParse(saisi, out userChoice))
-            {
+            if (float.TryParse(saisi, out userChoice)){
                 return IsInBorne(userChoice, borne);
             }
-            else
-            {
+            else{
                 Console.WriteLine("Invalide, reboot... ");
                 return false;
             }
         }
-        static bool SaisirAnyFloat(string message, out float userChoice)
-        {
+        static bool SaisirAnyFloat(string message, out float userChoice){
             Console.Write("\n" + message);
             string saisi = Console.ReadLine()?.Trim().Replace(',', '.');
-            if (float.TryParse(saisi, NumberStyles.Float, CultureInfo.InvariantCulture, out userChoice))
-            {
+            if (float.TryParse(saisi, NumberStyles.Float, CultureInfo.InvariantCulture, out userChoice)){
                 return true;
             }
             Console.WriteLine("Invalide, reboot...");
             userChoice = 0f;
             return false;
         }
-        static bool IsInBorne(float choix, float borne)
-        {
-            if (choix < 1 || choix > borne) 
-            {
+        static bool IsInBorne(float choix, float borne){
+            if (choix < 1 || choix > borne){
                 Console.WriteLine("Choix invalide !");
                 return false;
             }
             return true;
         }
-        static void PrintBanner(string banner, ConsoleColor color = ConsoleColor.Cyan)
-        {
+        static void PrintBanner(string banner, ConsoleColor color = ConsoleColor.Cyan){
             Console.Clear();
             Console.ForegroundColor = color;
             Console.WriteLine(banner);
             Console.ResetColor();
         }
-        static void PauseDuUser(string message)
-        {
+        static void PauseDuUser(string message){
             Console.WriteLine(message);
             Console.ReadKey(true);
         }
         static readonly List<string> historique = new List<string>();
-        static void ShowHist()
-        {
-            if (historique.Count == 0)
-            {
+        static void ShowHist(){
+            if (historique.Count == 0){
                 Console.WriteLine("Aucune action enregistrée.");
             }
-            else
-            {
+            else{
                 for (int i = 0; i < historique.Count; i++)
                     Console.WriteLine($"{i + 1}. {historique[i]}");
             }

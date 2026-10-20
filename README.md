@@ -4,7 +4,7 @@
 
 ## About This Repository
 
-Welcome to my personal development sandbox. This repository is a living document of my coding journey, where I experiment with different languages, test architectural patterns, and build functional tools from scratch. 
+Welcome to our personal development sandbox. This repository is a living document of our coding journey, where we experiment with different languages, test architectural patterns, and build functional tools from scratch. 
 
 Rather than just showcasing perfect code, this space highlights the *process*: the logic behind a console game, the cross-platform adaptation of a utility, and the iterative refinement of application structure. Each project represents a specific learning milestone, designed to be functional, intuitive, and progressively optimized.
 
@@ -19,7 +19,7 @@ Rather than just showcasing perfect code, this space highlights the *process*: t
 ## 📂 Featured Projects
 
 ### 🐍 Python: Logic, Utilities & Cross-Platform Adaptation
-Python is my primary environment for rapid prototyping, algorithmic experimentation, and building user-centric tools.
+Python is our primary environment for rapid prototyping, algorithmic experimentation, and building user-centric tools.
 
 - **Automation Tools** ([Python/Tools/](https://github.com/epicvixen73-arch/projetsPerso/tree/main/Python/Tools))
   - **[converterNumworks.py](https://github.com/epicvixen73-arch/projetsPerso/blob/main/Python/Tools/converterNumworks.py) & [fullconverter.py](https://github.com/epicvixen73-arch/projetsPerso/blob/main/Python/Tools/fullconverter.py)**: Custom utilities designed to automate data and format conversions. These scripts eliminate manual, repetitive tasks, demonstrating a focus on practical problem-solving and workflow optimization.

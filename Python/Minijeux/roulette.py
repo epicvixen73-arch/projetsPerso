@@ -76,7 +76,7 @@ def main():
                     print("Couleur invalide !")
                     continue
 
-                if COLOR_MAP[bet_color] == ("ROUGE" or "NOIR"):
+                if COLOR_MAP[bet_color] == "ROUGE" or COLOR_MAP[bet_color] == "NOIR":
                     gain = bet * 2
                     won = True
 

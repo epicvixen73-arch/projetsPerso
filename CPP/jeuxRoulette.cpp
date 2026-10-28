@@ -6,7 +6,7 @@
 
 using std::unordered_set;
 
-//générateur de l'aléatoire
+//generateur de l'aleatoire
 std::mt19937 gen(std::random_device {}());
 static std::uniform_int_distribution<int> distr(0, 36);
 
@@ -36,7 +36,7 @@ int main()
     separator();
     while (bank > 0) {
         std::cout << "[SOLDE: " << bank << "$]\n";
-        std::cout << "1 - Numéro (x36)\n";
+        std::cout << "1 - Numero (x36)\n";
         std::cout << "2 - Couleur (x2)\n";
         std::cout << "3  - Pair / Impair (x2)\n";
         std::string choix;
@@ -51,7 +51,6 @@ int main()
             continue;
         }
         int bet = 0;
-        std::cout << "Mise: " << std::endl;
         if (!readInt(bet, "Mise: ") || bet <= 0 || bet > bank) {
             std::cout << "Erreur : vous devez entrer un nombre entier !\n";
             continue;
@@ -64,7 +63,7 @@ int main()
         //filtre pour un parie sur un nombre
         if (choix == "1") {
             int bet_num = -1;
-            if (!readInt(bet_num, "Numéro de 0 à 36: ") || bet_num < 0 || bet_num > 36) {
+            if (!readInt(bet_num, "Numero de 0 à 36: ") || bet_num < 0 || bet_num > 36) {
                 std::cout << "Erreur : saisie invalide. Mise perdue.\n";
             }
             else if (bet_num == num) {
@@ -86,7 +85,7 @@ int main()
                 }
             }
         }
-        //filtre pour un parie sur la parité
+        //filtre pour un parie sur la parite
         else if (choix == "3") {
             char bet_parity = ' ';
 
@@ -100,7 +99,7 @@ int main()
                 std::cout << "Erreur : saisie invalide. Mise perdue.\n";
             }
             else if (num == 0) {
-                std::cout << "ZERO : Les paris de parité sont perdants.\n";
+                std::cout << "ZERO : Les paris de parite sont perdants.\n";
             }
             else {
                 bool is_even = (num % 2 == 0);

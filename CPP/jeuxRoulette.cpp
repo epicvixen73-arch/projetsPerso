@@ -95,6 +95,7 @@ int main()
         num = distr(gen);
         color = getColor(num);
         bool won = false;
+        gain = 0;
 
         //filtre pour un parie sur un nombre
         if (choix == "1") {
@@ -113,7 +114,8 @@ int main()
         }
         //filtre pour un parie sur une couleur
         else if (choix == "2") {
-            std::cout << "1 = Rouge \n2 = Noir \n3= Vert \nCouleur: " << std::endl;
+            std::cout << "1 = Rouge \n2 = Noir \n3 = Vert \nCouleur: " << std::endl;
+
             if (!(std::cin >> bet_color)) {
                 std::cin.clear();
                 std::cin.ignore(10000, '\n');
@@ -124,13 +126,8 @@ int main()
                 std::cout << "Couleur Invalide !" << std::endl;
                 continue;
             }
-            if (COLOR_MAP.at(bet_color) == color || COLOR_MAP.at(bet_color) == color) {
-                gain = bet * 2;
-                bank -= bet;
-                won = true;
-            }
-            if (COLOR_MAP.at(bet_color) == "VERT") {
-                gain = bet * 35 + bet;
+            if (COLOR_MAP.at(bet_color) == color) {
+                gain = (bet_color == 3) ? bet * 35 + bet : bet * 2;
                 bank -= bet;
                 won = true;
             }

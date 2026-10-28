@@ -1,177 +1,130 @@
 #include <iostream>
 #include <random>
 #include <string>
-#include <unordered_map>
-#include <map>
-#include <algorithm>
 #include <unordered_set>
+#include <limits>
 
 using std::unordered_set;
 
 //générateur de l'aléatoire
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_int_distribution<> distr(0, 36);
-
-unordered_set<int> nombresRouge = { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 };
-unordered_set<int> nombresNoir = { 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35 };
-int nombreVert = 0;
-
-std::map<int, std::string> COLOR_MAP = {
-        {1, "ROUGE"},
-        {2, "NOIR"},
-        {3, "VERT"}
-};
+std::mt19937 gen(std::random_device {}());
+static std::uniform_int_distribution<int> distr(0, 36);
 
 static std::string getColor(int number) {
-        if (number == 0) {
-            return "VERT";
-        }
-        if (nombresRouge.contains(number)) {
-            return "ROUGE";
-        }
-        if (nombresNoir.contains(number)) {
-            return "NOIR";
-        }
-        else {
-            return "INVALIDE";
-        }
+    if (number == 0) return "VERT";
+    static const std::unordered_set<int> nombresRouge = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
+    return nombresRouge.contains(number) ? "ROUGE" : "NOIR";
 }
-
 static void separator() {
-        std::cout << "-------------------------" << std::endl;
+        std::cout << "-------------------------\n";
 }
-
+static bool readInt(int& out, const std::string& prompt) {
+    std::cout << prompt;
+    if (!(std::cin >> out)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return false;
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return true;
+}
 int main()
 {
-    std::string choix;
-    std::string color;
-    std::string parity_str;
-    char bet_parity;
-    bool is_even;
     int bank = 1000;
-    int net_profit;
-    int bet_color;
-    int bet_num;
-    int bet;
-    int num;
-    int gain = 0; 
-
     separator();
-    std::cout << "CASINO ROULETTE" << std::endl;
+    std::cout << "CASINO ROULETTE\n";
     separator();
-
     while (bank > 0) {
-        //Début UI Utilisateur
-        std::cout << "[SOLDE: " << bank << "$]" << std::endl;
-        std::cout << "1 - Numéro (x36)" << std::endl;
-        std::cout << "2 - Couleur (x2)" << std::endl;
-        std::cout << "3  - Pair / Impair (x2)" << std::endl;
-        //Fin UI Utilisateur
-        std::cout << "Choix: " << std::endl;
+        std::cout << "[SOLDE: " << bank << "$]\n";
+        std::cout << "1 - Numéro (x36)\n";
+        std::cout << "2 - Couleur (x2)\n";
+        std::cout << "3  - Pair / Impair (x2)\n";
+        std::string choix;
+        std::cout << "Choix: ";
         std::cin >> choix;
         if (choix == "0") {
-            std::cout << "Fin de la partie. " << std::endl;
+            std::cout << "Fin de la partie. Solde final: " << bank << " $\n";
             break;
         }
-
         if (choix != "1" && choix != "2" && choix != "3") {
-            std::cout << "Choix invalide !" << std::endl;
+            std::cout << "Choix invalide ! \n";
             continue;
         }
-
+        int bet = 0;
         std::cout << "Mise: " << std::endl;
-        if (!(std::cin >> bet)) {
-            std::cout << "Erreur : vous devez entrer un nombre entier !" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
+        if (!readInt(bet, "Mise: ") || bet <= 0 || bet > bank) {
+            std::cout << "Erreur : vous devez entrer un nombre entier !\n";
             continue;
         }
-        if (bet <= 0 || bet > bank) {
-            std::cout << "Mise invalide (trop élevée ou négative) !" << std::endl;
-            continue;
-        }
-
-        num = distr(gen);
-        color = getColor(num);
+        bank -= bet;
+        int num = distr(gen);
+        std::string color = getColor(num);
         bool won = false;
-        gain = 0;
-
+        int gain = 0;
         //filtre pour un parie sur un nombre
         if (choix == "1") {
-            std::cout << "Numéro de 0 à 36: " << std::endl;
-            if (!(std::cin >> bet_num)) {
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
-                std::cout << "Erreur : saisie invalide.\n";
-                continue;
+            int bet_num = -1;
+            if (!readInt(bet_num, "Numéro de 0 à 36: ") || bet_num < 0 || bet_num > 36) {
+                std::cout << "Erreur : saisie invalide. Mise perdue.\n";
             }
-            if (bet_num == num) {
-                gain = bet * 35 + bet;
-                bank -= bet;
+            else if (bet_num == num) {
+                gain = bet * 36;
                 won = true;
             }
         }
         //filtre pour un parie sur une couleur
         else if (choix == "2") {
-            std::cout << "1 = Rouge \n2 = Noir \n3 = Vert \nCouleur: " << std::endl;
-
-            if (!(std::cin >> bet_color)) {
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
-                std::cout << "Erreur : saisie invalide.\n";
-                continue;
-            }
-            if (!COLOR_MAP.contains(bet_color)) {
-                std::cout << "Couleur Invalide !" << std::endl;
-                continue;
-            }
-            if (COLOR_MAP.at(bet_color) == color) {
-                gain = (bet_color == 3) ? bet * 35 + bet : bet * 2;
-                bank -= bet;
-                won = true;
-            }
-        }
-        //filtre pour un parie sur la parité
-        else if (choix == "3") {
-            if (num == 0) {
-                std::cout << "ZERO - PERDU" << std::endl;
+            int bet_color = 0;
+            if (!readInt(bet_color, "1 = Rouge, 2 = Noir, 3 = Vert\nCouleur: ") || bet_color < 1 || bet_color > 3) {
+                std::cout << "Erreur : saisie invalide. Mise perdue.\n";
             }
             else {
-                std::cout << "Pair (P) / Impair (I): " << std::endl;
-                if (!(std::cin >> bet_parity)) {
-                    std::cin.clear();
-                    std::cin.ignore(10000, '\n');
-                    std::cout << "Erreur : saisie invalide.\n";
-                    continue;
-                }
-                if (bet_parity != 'P' && bet_parity != 'I') {
-                    std::cout << "Choix invalide !" << std::endl;
-                    continue;
-                }
-                is_even = (num % 2 == 0);
-                if ((bet_parity == 'P' && is_even) || (bet_parity == 'I' && !is_even)) {
-                    gain = bet * 2;
-                    bank -= bet;
+                std::string targetColor = (bet_color == 1) ? "ROUGE" : (bet_color == 2) ? "NOIR" : "VERT";
+                if (color == targetColor) {
+                    gain = (bet_color == 3) ? bet * 36 : bet * 2;
                     won = true;
                 }
             }
         }
-        parity_str = (num == 0) ? "ZERO" : (num % 2 == 0) ? "PAIR" : "IMPAIR";
-        std::cout << "\nTirage: " << num << " (" << color << ", " << parity_str << ") " << std::endl;
+        //filtre pour un parie sur la parité
+        else if (choix == "3") {
+            char bet_parity = ' ';
+
+            std::cout << "Pair (P) / Impair (I): ";
+            std::cin >> bet_parity;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            bet_parity = std::toupper(bet_parity);
+
+            if (bet_parity != 'P' && bet_parity != 'I') {
+                std::cout << "Erreur : saisie invalide. Mise perdue.\n";
+            }
+            else if (num == 0) {
+                std::cout << "ZERO : Les paris de parité sont perdants.\n";
+            }
+            else {
+                bool is_even = (num % 2 == 0);
+                bool bet_is_even = (bet_parity == 'P');
+                if (is_even == bet_is_even) {
+                    gain = bet * 2;
+                    won = true;
+                }
+            }
+        }
+        std::string parity_str = (num == 0) ? "ZERO" : (num % 2 == 0) ? "PAIR" : "IMPAIR";
+        std::cout << "\nTirage: " << num << " (" << color << ", " << parity_str << ") \n";
         if (won) {
-            bank += gain; 
-            net_profit = gain - bet;
-            std::cout << "GAGNE: +" << net_profit << " $ (profit)" << std::endl;
+            bank += gain;
+            std::cout << "GAGNE: +" << (gain - bet) << " $ (profit)\n";
         }
         else {
-            std::cout << "Perdu..." << std::endl;
+            std::cout << "Perdu...\n";
         }
-        std::cout << "[SOLDE: " << bank << " $]" << std::endl;
+        std::cout << "[SOLDE: " << bank << " $]";
         separator();
-        if (bank <= 0) {
-            std::cout << "GAME OVER" << std::endl;
-            break;
-        }
     }
+    if (bank <= 0) {
+        std::cout << "GAME OVER\n";
+    }
+    return 0;
 }
